@@ -1,0 +1,85 @@
+---
+configs:
+  run:
+    sub: run
+    main: app.ts
+    format: "deno run [security] [options] [...args]"
+    security:
+      A:
+      allow-all:
+      allow-env:
+      allow-hrtime:
+      allow-net:
+      allow-plugin:
+      allow-read:
+      allow-run:
+      allow-write:
+    options:
+      cached-only:
+      cert:
+      c:
+      config:
+      h:
+      help:
+      importmap:
+      inspect:
+      lock:
+      lock-write:
+      L:
+      log-level:
+      no-remote:
+      q:
+      quiet:
+      r:
+      reload:
+      seed:
+      unstable:
+      v8-flags:
+
+
+  install:
+    sub: install
+    main: app.ts
+    format: "deno install [security] [options] [...args]"
+    security:
+      A:
+      allow-all:
+      allow-env:
+      allow-hrtime:
+      allow-net:
+      allow-plugin:
+      allow-read:
+      allow-run:
+      allow-write:
+    options:
+      c:
+      cert:
+      f:
+      force:
+      h:
+      help:
+      L:
+      log-level:
+      n:
+      name:
+      q:
+      quiet:
+      root:
+      unstable:
+
+
+  bundle:
+    sub: bundle
+    main: app.ts
+    format: "deno bundle [options] #file [#out_file]"
+    options:
+      cert:
+      c:
+      config:
+      h:
+      help:
+      L:
+      log-level:
+      q:
+      quiet:
+      unstable:

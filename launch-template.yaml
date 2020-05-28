@@ -1,0 +1,133 @@
+---
+# filepath: #file
+# bool: #bool  .  If no true/false provided, then the presence of the flag simply passes through
+# url: #url
+# string: #text
+# number: #int
+# alias to: (##option)
+# args: (...args)  . Mainly for passing through args without interpretation
+
+configs:
+  run:
+    sub: run
+    main: app.ts
+    format: "deno run [security] [options] (...args)"
+    security:
+      A:            ["-", (##allow-all)]
+      allow-all:    ["--"]
+      allow-env:    ["--", (#text)]
+      allow-hrtime: ["--"]
+      allow-net:    ["--", (#url)]
+      allow-plugin: ["--"]
+      allow-read:   ["--", [(#file), (#url)]]
+      allow-run:    ["--", [(#file), (#url)]]
+      allow-write:  ["--", [(#file), (#url)]]
+    options:
+      cached-only:  ["--", (#bool)]
+      cert:         ["--", (#file)]
+      c:            ["-", (##config)]
+      config:       ["--", (#file)]
+      h:            ["-", (##help)]
+      help:         ["--"]
+      importmap:    ["--", (#file)]
+      inspect:      ["--", (#url)]
+      lock:         ["--", (#url)]
+      lock-write:   ["--"]
+      L:            ["-", (##log-level)]
+      log-level:    ["--", (#text)]
+      no-remote:    ["--"]
+      q:            ["-", (##quiet)]
+      quiet:        ["--"]
+      r:            ["-", (##reload)]
+      reload:       ["--", ["(#file)", "(#url)"]]
+      seed:         ["--", (#number)]
+      unstable:     ["--"]
+      v8-flags:     ["--", [(...args)]]
+
+
+  install:
+    sub: install
+    main: app.ts
+    format: "deno install [security] [options] (...args)"
+    security:
+      A:            ["-", (##allow-all)]
+      allow-all:    ["--"]
+      allow-env:    ["--", (#text)]
+      allow-hrtime: ["--"]
+      allow-net:    ["--", (#url)]
+      allow-plugin: ["--"]
+      allow-read:   ["--", [(#file), (#url)]]
+      allow-run:    ["--", [(#file), (#url)]]
+      allow-write:  ["--", [(#file), (#url)]]
+    options:
+      c:            ["-", (##cert)]
+      cert:         ["--", (#file)]
+      f: (#force)
+      force:
+      h: (#help)
+      help:
+      L: (#log-level)
+      log-level:
+      n: (#name)
+      name:
+      q: (#quiet)
+      quiet:
+      root:
+      unstable:
+
+
+  bundle:
+    sub: bundle
+    main: app.ts
+    format: "deno bundle [options] #file [#out_file]"
+    options:
+      cert:
+      c: (#config)
+      config:
+      h: (#help)
+      help:
+      L: (#log-level)
+      log-level:
+      q: (#quiet)
+      quiet:
+      unstable:
+
+
+  test:
+    sub: test
+    main: app.ts
+    format: "deno test [security] [options] (...args)"
+    security:
+      A:            ["-", (##allow-all)]
+      allow-all:    ["--"]
+      allow-env:    ["--", (#text)]
+      allow-hrtime: ["--"]
+      allow-net:    ["--", (#url)]
+      allow-plugin: ["--"]
+      allow-read:   ["--", [(#file), (#url)]]
+      allow-run:    ["--", [(#file), (#url)]]
+      allow-write:  ["--", [(#file), (#url)]]
+      allow-none:   ["--"]
+    options:
+      cached-only:
+      cert:
+      c: (#config)
+      config:
+      failfast:
+      filter:
+      h: (#help)
+      help:
+      importmap:
+      inspect:
+      inspect-brk:
+      lock:
+      L: (#log-level)
+      log-level:
+      no-remote:
+      q: (#quiet)
+      quiet:
+      r: (#reload)
+      reload:
+      seed:
+      unstable:
+      v8-flags:
