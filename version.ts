@@ -1,7 +1,7 @@
 
 import * as semver from "https://deno.land/x/semver@v1.0.0/mod.ts";
 
-const THIS_VERSION = "v0.1.0";
+const THIS_VERSION = "v0.2.1";
 export { THIS_VERSION };
 
 
