@@ -1,5 +1,7 @@
 
-import {parseYaml, readFileStr, writeFileStr } from "../deps.ts";
+import { parseYaml, readFileStr, writeFileStr } from "../deps.ts";
+import { dotenv, parseCli } from "../deps.ts";
+import { protocol as denoProtocol } from "../Protocols/denoProtocol.ts";
 
 
 export class Zap {
@@ -8,15 +10,15 @@ export class Zap {
   private _options: any;
   private _protocolFile:string;
   private _protocol: any;
-  private _command: string;
+  private _command: any;
   private _whichApp: string;
+  private _cliArgs: any;
 
 
   constructor(here?: string, whichApp?: string, launchFileName?: string) {
     this._here = here || Deno.cwd();
     this._launchFile = launchFileName || "launch.yaml";
-    this._protocolFile = "/Protocols/launch-protocol.yaml";
-    this._command = "";
+    this._protocolFile = "Protocols/denoProtocol.yaml";
     this._whichApp = whichApp || "deno";
   }
 
@@ -39,26 +41,54 @@ export class Zap {
 
     const toLoad = `${path}/${file}`;
 
-    const yaml = await readFileStr(toLoad);
-    this.Protocol = await parseYaml(yaml);
-
+    let it = false;
+    if (it) {
+      const yaml = await readFileStr(toLoad);
+      this.Protocol = await parseYaml(yaml);
+    }
+    else {
+      this.Protocol = denoProtocol;
+    }
     return this.Protocol;
   }
 
-
-  generateCommand(from: string): string {
+  generateCommand(from: string): any {
     const config = this.Options;
     const proto = this.Protocol;
     let cmd = null;
     let has = false;
+    let fileName = "";
+    let envFile;
+
 
     // Level of script subs
     //
-    let configs = this.getThisLevel(from, config.apps[this.WhichApp][from]);
-    let protos = this.getThisLevel(from, proto.apps[this.WhichApp][from]);
+    let configs = this.getThisLevel(from, config[this.WhichApp][from]);
+    let protos = this.getThisLevel(from, proto[this.WhichApp][from]);
 
     if(configs.length > 0 && this.hasSameNode(configs, protos)) {
       cmd = this.getNodeValue("format", protos);
+      fileName = this.getNodeValue("main", configs);
+    }
+
+    // Get commandline args
+    //
+    let lineArgs = Deno.args;
+    if (lineArgs) {
+      this.CliArgs = parseCli(lineArgs);
+
+      if (this.CliArgs["dotenv"]) {
+        envFile = this.CliArgs["dotenv"];
+        delete this.CliArgs["dotenv"];
+      }
+    }
+
+    if (!envFile) {
+      envFile = this.getNodeValue("dotenv", configs);
+    }
+
+    if (envFile) {
+      let x = dotenv({path: `${Deno.cwd()}/${envFile}`, export: true});
     }
 
     // Level of OptionGroups
@@ -67,18 +97,40 @@ export class Zap {
       let optionGroups = this.getOptionGroupsFromFormat(cmd);
 
       for (let [option] of optionGroups) {
-        configs = this.getThisLevel(option, config.apps[this.WhichApp][from][option]);
-        protos = this.getThisLevel(option, proto.apps[this.WhichApp][from][option]);
+        configs = this.getThisLevel(option, config[this.WhichApp][from][option]);
+        protos = this.getThisLevel(option, proto[this.WhichApp][from][option]);
 
         let processed = this.processOptionGroup(configs, protos);
         cmd = cmd.replace(`[${option}]`, processed);
       }
+
+      // Append fileName to command
+      //
+      cmd = cmd.replace("#main", fileName);
     }
     else {
-      return "";
+      return undefined;
     }
 
+    cmd = cmd.split(" ");
+    cmd = cmd.filter((e:any) => { return e != null && e.trim() != "" });
+
+    this.Command = cmd;
     return cmd;
+  }
+
+  async runCommand(): Promise<{ code: number}> {
+    if (!this.Command) {
+      throw Error("must generateCommand() first.");
+    }
+
+    let process = Deno.run({
+      cmd: [
+        ...this.Command
+      ]
+    });
+    let { code } = await process.status();
+    return { code };
   }
 
   private getThisLevel(which: string, node: any): any {
@@ -139,14 +191,18 @@ export class Zap {
     return result;
   }
 
-
   private processAtom(fromInput: any, fromProto: any): string {
     let [ ...options ] = fromProto[1];
     let [key, values] = [fromInput[0], fromInput[1]];
     let result = options[0];
 
     if (options[1] === "array") {
-      result += key + "=" + values.join(",");
+      if (!Array.isArray(values)) {
+        result += fromProto[0] + " ";
+      }
+      else {
+        result += key + "=" + values.join(",");
+      }
     }
     else {
       result += fromProto[0] + " ";
@@ -154,6 +210,9 @@ export class Zap {
 
     return result;
   }
+
+
+
 
 
   public async writeToJson(source?: string, destination?: string): Promise<void> {
@@ -177,6 +236,11 @@ export class Zap {
 
     await writeFileStr(destination, ts);
   }
+
+
+
+
+
 
   public set Here(path: string) {
     this._here = path;
@@ -232,5 +296,13 @@ export class Zap {
 
   public get WhichApp(): string {
     return this._whichApp;
+  }
+
+  public set CliArgs(value: any) {
+    this._cliArgs = value;
+  }
+
+  public get CliArgs(): any {
+    return this._cliArgs;
   }
 }

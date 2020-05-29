@@ -1,65 +1,67 @@
 ---
-apps:
-  deno:
-    run:
-      main: app.ts
-      security:
-        allow-all:
-        allow-env: true
-        allow-hrtime:
-        allow-net: true
-        allow-plugin:
-        allow-read:
-        allow-run:
-        allow-write:
+deno:
+  run:
+    main: ./Testing/testApp.ts
+    dotenv:
+    security:
+      allow-all:
+      allow-env: true
+      allow-hrtime: true
+      allow-net:
+        - google.com
+        - deno.land
+      allow-plugin:
+      allow-read:
+      allow-run:
+      allow-write:
 
-      options:
-        cached-only:
-        cert:
-        config:
-        help:
-        importmap:
-        inspect:
-        inspect-brk:
-        lock:
-        lock-write:
-        log-level:
-        no-remote:
-        quiet:
-        reload:
-        seed:
-        unstable:
-        v8-flags:
-
-
-    install:
-      main: app.ts
-      security:
-        allow-all:
-        allow-env:
-        allow-hrtime:
-        allow-net:
-        allow-plugin:
-        allow-read:
-        allow-run:
-        allow-write:
-      options:
-        cert:
-        force:
-        help:
-        log-level:
-        name:
-        quiet:
-        root:
-        unstable:
+    options:
+      cached-only:
+      cert:
+      config:
+      help:
+      importmap:
+      inspect:
+      inspect-brk:
+      lock:
+      lock-write:
+      log-level:
+      no-remote:
+      quiet:
+      reload:
+      seed:
+      unstable:
+      v8-flags:
 
 
-    bundle:
-      main: app.ts
-      options:
-        cert:
-        config:
-        help:
-        log-level:
-        quiet:
-        unstable:
+  install:
+    main: app.ts
+    security:
+      allow-all:
+      allow-env:
+      allow-hrtime:
+      allow-net:
+      allow-plugin:
+      allow-read:
+      allow-run:
+      allow-write:
+    options:
+      cert:
+      force:
+      help:
+      log-level:
+      name:
+      quiet:
+      root:
+      unstable:
+
+
+  bundle:
+    main: app.ts
+    options:
+      cert:
+      config:
+      help:
+      log-level:
+      quiet:
+      unstable:
