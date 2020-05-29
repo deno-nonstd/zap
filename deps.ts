@@ -7,5 +7,6 @@ export { EarlyExitFlag, Option as cliOption } from "https://deno.land/x/args@2.0
 export { PARSE_FAILURE } from "https://deno.land/x/args@2.0.0/symbols.ts";
 
 export { readFileStr } from "https://deno.land/std@0.53.0/fs/read_file_str.ts";
+export { writeFileStr } from "https://deno.land/std@0.53.0/fs/write_file_str.ts";
 
 
