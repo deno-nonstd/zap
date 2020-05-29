@@ -1,0 +1,18 @@
+
+---
+deno:
+  run:
+    main: sampleApp.ts
+    dotenv: main.env
+    security:
+      allow-env: true
+
+  install:
+    main: sample.ts
+    security:
+      allow-env: true
+
+    options:
+      force: true
+      name: sampleApp
+  

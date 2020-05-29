@@ -136,15 +136,18 @@ export class Zap {
   private getThisLevel(which: string, node: any): any {
     let result: any[] = [];
 
-    if (which !== "...args") {
-      for (let [key, value] of Object.entries(node)) {
-        result.push([key, value]);
+    try {
+      if (which !== "...args") {
+        for (let [key, value] of Object.entries(node)) {
+          result.push([key, value]);
+        }
+      } else {
+        // TODO: Args pass-through
       }
     }
-    else {
-      // TODO: Args pass-through
+    catch (e) {
+      //
     }
-
     return result;
   }
 
@@ -198,14 +201,20 @@ export class Zap {
 
     if (options[1] === "array") {
       if (!Array.isArray(values)) {
-        result += fromProto[0] + " ";
+        result += key + " ";
       }
       else {
         result += key + "=" + values.join(",");
       }
     }
+    else if (options[1] && options[1].includes("#text", "#file", "#url")) {
+      result += `${key}=${values} `;
+    }
+    else if (options[1] && options[1] === "#number") {
+      result += `${key} ${values} `;
+    }
     else {
-      result += fromProto[0] + " ";
+      result += key + " ";
     }
 
     return result;

@@ -9,8 +9,8 @@
 deno:
   run:
     sub: run
-    main: app.ts
-    format: "deno run [security] [options] #main [...args]"
+    main:           ["#file", "#url"]
+    format:         "deno run [security] [options] #main [...args]"
     dotenv:         ["--", "#file"]
     security:
       allow-all:    ["--"]
@@ -43,8 +43,8 @@ deno:
 
   install:
     sub: install
-    main: app.ts
-    format: "deno install [security] [options] [...args]"
+    main:           ["#file", "#url"]
+    format:         "deno install [security] [options] #main [...args]"
     dotenv:         ["--", "#file"]
     security:
       allow-all:    ["--"]
@@ -68,8 +68,8 @@ deno:
 
   bundle:
     sub: bundle
-    main: app.ts
-    format: "deno bundle [options] #file [#out_file]"
+    main:           ["#file", "#url"]
+    format:         "deno bundle [options] #main [#out_file]"
     dotenv:         ["--", "#file"]
     options:
       cert:         ["--", "#file"]
@@ -82,8 +82,8 @@ deno:
 
   test:
     sub: test
-    main: app.ts
-    format: "deno test [security] [options] [...args]"
+    main:           ["#file", "#url"]
+    format:         "deno test [security] [options] #main [...args]"
     dotenv:         ["--", "#file"]
     security:
       allow-all:    ["--"]

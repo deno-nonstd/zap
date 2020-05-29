@@ -1,7 +1,7 @@
 ---
 deno:
   run:
-    main: ./Testing/testApp.ts
+    main: Samples/sampleApp.ts
     dotenv:
     security:
       allow-all:
@@ -36,8 +36,9 @@ deno:
 
   install:
     main: app.ts
+    dotenv:
     security:
-      allow-all:
+      allow-all: true
       allow-env:
       allow-hrtime:
       allow-net:
@@ -47,10 +48,10 @@ deno:
       allow-write:
     options:
       cert:
-      force:
+      force: true
       help:
       log-level:
-      name:
+      name: zap
       quiet:
       root:
       unstable:
@@ -65,3 +66,37 @@ deno:
       log-level:
       quiet:
       unstable:
+
+
+  test:
+    main: Tests/test_Strings.ts
+    dotenv:
+    security:
+      allow-all:
+      allow-env:
+      allow-hrtime:
+      allow-net:
+      allow-plugin:
+      allow-read:
+      allow-run:
+      allow-write:
+      allow-none:
+
+    options:
+      cached-only:
+      cert:
+      config:
+      failfast:
+      filter:
+      help:
+      importmap:
+      inspect:
+      inspect-brk:
+      lock:
+      log-level:
+      no-remote:
+      quiet:
+      reload:
+      seed:
+      unstable:
+      v8-flags:

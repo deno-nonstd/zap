@@ -2,7 +2,10 @@ let protocol = {
  "deno": {
   "run": {
    "sub": "run",
-   "main": "app.ts",
+   "main": [
+    "#file",
+    "#url"
+   ],
    "format": "deno run [security] [options] #main [...args]",
    "dotenv": [
     "--",
@@ -118,8 +121,11 @@ let protocol = {
   },
   "install": {
    "sub": "install",
-   "main": "app.ts",
-   "format": "deno install [security] [options] [...args]",
+   "main": [
+    "#file",
+    "#url"
+   ],
+   "format": "deno install [security] [options] #main [...args]",
    "dotenv": [
     "--",
     "#file"
@@ -200,8 +206,11 @@ let protocol = {
   },
   "bundle": {
    "sub": "bundle",
-   "main": "app.ts",
-   "format": "deno bundle [options] #file [#out_file]",
+   "main": [
+    "#file",
+    "#url"
+   ],
+   "format": "deno bundle [options] #main [#out_file]",
    "dotenv": [
     "--",
     "#file"
@@ -232,8 +241,11 @@ let protocol = {
   },
   "test": {
    "sub": "test",
-   "main": "app.ts",
-   "format": "deno test [security] [options] [...args]",
+   "main": [
+    "#file",
+    "#url"
+   ],
+   "format": "deno test [security] [options] #main [...args]",
    "dotenv": [
     "--",
     "#file"
