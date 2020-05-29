@@ -5,12 +5,17 @@
 import { Zap } from "./src/Zap.ts";
 import { init as initContent } from "./Protocols/init.ts";
 import { writeFileStr } from "./deps.ts";
+import { checkIfNewer } from "./version.ts";
 
 
 let which = "";
 let file = "";
 
 try {
+  // Check if there's a new version available
+  //
+  await checkIfNewer();
+
   let app = new Zap();
 
 // Args format:
