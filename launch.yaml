@@ -1,7 +1,7 @@
 ---
 deno:
   run:
-    main: cli.ts
+    main: main.ts
     dotenv: 
     security:
       allow-all: true
