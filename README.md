@@ -33,24 +33,19 @@ deno:
 
 `$ deno install -Af -n zap https://deno.land/x/deno-nonstd/zap/app.ts`
 
-To test whether it installed, type:
+To test it, type:
 
 `$ zap`
 
-and it should respond.  On MacOS Mojave I had to add the .deno/bin to my
-paths list and took some effort.  I dont know if this will work for you
-but this is what worked for me (necessary to do for installing any Deno 
-script to run as commandline app):
-
-`$ echo '/User/<name>/.deno/bin' | sudo tee /etc/paths.d/deno`
-
-Then, in a new (not existing) command instance, test it with:
-
-`$ zap`
-
-You may have to close any existing terminals or apps that need to use it.
-
-Hopefully that works for you.
+>NOTE: If you haven't previously added /.deno/bin to your $PATH variable (MacOS Mojave at least), 
+>then you will need to or Deno won't run the utility.  It seems to be different for 
+>everyone (even on OSX) but this worked for me:
+>
+> `$ echo '/User/<name>/.deno/bin' | sudo tee /etc/paths.d/deno`
+>
+> Then any NEW command window or app started will see the path.
+>
+> You may have to close any existing terminals or apps that need to use it.
 
 
 ## Overview
