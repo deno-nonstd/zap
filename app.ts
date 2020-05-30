@@ -5,8 +5,9 @@
 import { Zap } from "./src/Zap.ts";
 import { init as initContent } from "./Protocols/init.ts";
 import { writeFileStr } from "./deps.ts";
-import { checkIfNewer } from "./version.ts";
 
+
+import { checkIfNewer, VersionInfo, VersionResult } from "../nonstd/src/Version/version.ts";
 
 let which = "";
 let file = "";
@@ -14,7 +15,15 @@ let file = "";
 try {
   // Check if there's a new version available
   //
-  await checkIfNewer();
+  const version = new VersionInfo(
+    "Zap",
+    "deno-nonstd",
+    "zap",
+    "main.ts",
+    "v0.2.1"
+  );
+
+  let result = await checkIfNewer(version);
 
   let app = new Zap();
 

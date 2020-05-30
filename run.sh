@@ -7,5 +7,6 @@
 #deno run -A app.ts init x.yaml
 #deno install -Af --name zap app.ts
 #deno install -A -f --name zap https://deno.land/x/gh:deno-nonstd:zap/app.ts
+#deno install -Af -n zap https://denopkg.com/deno-nonstd/zap/app.ts
 #export PATH="/Users/.../.deno/bin:$PATH
 
