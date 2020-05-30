@@ -7,7 +7,7 @@ import { init as initContent } from "./Protocols/init.ts";
 import { writeFileStr } from "./deps.ts";
 
 
-import { checkIfNewer, VersionInfo, VersionResult } from "../nonstd/src/Version/version.ts";
+import { checkIfNewer, VersionInfo, VersionResult } from "https://deno.land/x/nonstd/src/Version/version.ts"
 
 let which = "";
 let file = "";
@@ -15,22 +15,22 @@ let file = "";
 try {
   // Check if there's a new version available
   //
-  const version = new VersionInfo(
-    "Zap",
-    "deno-nonstd",
-    "zap",
-    "main.ts",
-    "v0.2.1"
-  );
+  const version: VersionInfo = {
+    AppName: "Zap",
+    Org: "deno-nonstd",
+    Repo: "zap",
+    MainFile: "app.ts",
+    CurrentVersion: "v0.2.2"
+  };
 
   let result = await checkIfNewer(version);
 
   let app = new Zap();
 
-// Args format:
-//
-// zap <which-Run> <launch-File-Name> ...
-//
+  // Args format:
+  //
+  // zap <which-Run> <launch-File-Name> ...
+  //
   if (Deno.args.length == 0) {
     console.log("Please enter the config you wish to run.");
     console.log();

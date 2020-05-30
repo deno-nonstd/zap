@@ -6,6 +6,10 @@ deno:
     dotenv: main.env
     security:
       allow-env: true
+    options:
+      importmap: "imports.json"
+      unstable: true
+
 
   install:
     main: sample.ts

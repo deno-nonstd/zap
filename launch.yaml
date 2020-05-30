@@ -20,7 +20,7 @@ deno:
       cert:
       config:
       help:
-      importmap:
+      importmap: "imports.json"
       inspect:
       inspect-brk:
       lock:
@@ -29,8 +29,8 @@ deno:
       no-remote:
       quiet:
       reload:
-      seed:
-      unstable:
+      seed: 4
+      unstable: true
       v8-flags:
 
 

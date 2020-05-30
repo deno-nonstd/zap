@@ -3,6 +3,11 @@ import { parseYaml, readFileStr, writeFileStr } from "../deps.ts";
 import { dotenv, parseCli } from "../deps.ts";
 import { protocol as denoProtocol } from "../Protocols/denoProtocol.ts";
 
+export class ProfileError extends Error {
+  constructor(message?: string) {
+    super(message);
+  }
+}
 
 export class Zap {
   private _here: string;
@@ -187,6 +192,11 @@ export class Zap {
 
       if (value) {
         let protoAtom = this.getSpecificNodeObject(key, proto);
+
+        if (protoAtom === null) {
+          throw new ProfileError(`profile key ${key} not found in prototype.`);
+        }
+
         result += this.processAtom(inputAtom, protoAtom);
       }
     }
@@ -207,11 +217,19 @@ export class Zap {
         result += key + "=" + values.join(",");
       }
     }
-    else if (options[1] && options[1].includes("#text", "#file", "#url")) {
-      result += `${key}=${values} `;
-    }
-    else if (options[1] && options[1] === "#number") {
-      result += `${key} ${values} `;
+    else if (options[1]) {
+      switch (options[1]) {
+        case "#text":
+        case "#file":
+        case "#url":
+          result += `${key}=${values} `;
+          break;
+
+        case "#number":
+          result += `${key} ${values} `;
+          break;
+
+      }
     }
     else {
       result += key + " ";
