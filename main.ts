@@ -7,7 +7,7 @@ const version = new VersionInfo(
   "deno-nonstd",
   "zap",
   "main.ts",
-  "v0.0.1"
+  "v0.5.0"
 );
 
 let result = await checkIfNewer(version);
