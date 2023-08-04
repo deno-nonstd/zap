@@ -1,4 +1,5 @@
 
-//      @deno-types="https://unpkg.com/cac@6.5.10/mod.d.ts"
-export { cac } from "https://unpkg.com/cac@6.5.10/mod.js";
+
+export { Command } from "https://deno.land/x/cliffy@v0.8.2/command.ts";
+
 
